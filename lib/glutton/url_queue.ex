@@ -1,39 +1,37 @@
 defmodule Glutton.URLQueue do
   use GenServer
 
-
-  def start_link(_args) do
-    GenServer.start_link(__MODULE__, [], name: __MODULE__)
+  def start_link(args) do
+    GenServer.start_link(__MODULE__, args, name: __MODULE__)
   end
 
   def push(url) do
     GenServer.cast(__MODULE__, {:push, url})
   end
 
-  def pop() do
-    GenServer.call(__MODULE__, :pop)
+  def pop(count) do
+    GenServer.call(__MODULE__, {:pop, count})
   end
 
   def list() do
     GenServer.call(__MODULE__, :list)
   end
 
-  @impl true
-  def init(args), do: {:ok, args}
+  @impl GenServer
+  def init(_args), do: {:ok, []}
 
-  @impl true
-  def handle_call(:pop, _from, state) do
-    [next_url | remaining_urls] = state
-    {:reply, next_url, remaining_urls}
-  end
-
-  @impl true
+  @impl GenServer
   def handle_cast({:push, url}, state) do
-    new_state = [url | state]
-    {:noreply, new_state}
+    {:noreply, [url | state]}
   end
 
-  @impl true
+  @impl GenServer
+  def handle_call({:pop, count}, _from, state) do
+    {urls, new_state} = Enum.split(state, count)
+    {:reply, urls, new_state}
+  end
+
+  @impl GenServer
   def handle_call(:list, _from, state) do
     {:reply, state, state}
   end
