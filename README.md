@@ -1,21 +1,11 @@
 # Glutton
 
-**TODO: Add description**
+## TODO
 
-## Installation
+- [ ] Ignore already processed urls
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `glutton` to your list of dependencies in `mix.exs`:
 
-```elixir
-def deps do
-  [
-    {:glutton, "~> 0.1.0"}
-  ]
-end
-```
+## Not Covered
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/glutton>.
-
+- Being a good netizen
+- Scraping all the things. We're limiting to a limited number of sites
