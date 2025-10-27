@@ -23,6 +23,7 @@ defmodule Glutton.Pipeline do
 
   def handle_message(:default, %Message{data: %{module: module, url: url}} = message, _context) do
     module.scrape(url)
+    message
   end
 
   def transform(url, _opts) do
