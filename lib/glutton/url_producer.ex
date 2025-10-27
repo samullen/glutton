@@ -9,10 +9,10 @@ defmodule Glutton.URLProducer do
     GenStage.start_link(__MODULE__, args)
   end
 
-  @impl true
+  @impl GenStage
   def init(_args), do: {:producer, %{demand: 0}}
 
-  @impl true
+  @impl GenStage
   def handle_demand(incoming_demand, state) when incoming_demand > 0 do
     schedule_receive_messages(0)
 
@@ -23,10 +23,10 @@ defmodule Glutton.URLProducer do
     {:noreply, [], state}
   end
 
+  @impl GenStage
   def handle_info(:receive_messages, state) do
     case URLQueue.pop(state.demand) do
       urls when is_list(urls) and length(urls) > 0 ->
-        schedule_receive_messages(0)
         {:noreply, urls, %{demand: state.demand - length(urls)}}
 
       [] ->
