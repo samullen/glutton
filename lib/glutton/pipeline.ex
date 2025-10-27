@@ -21,9 +21,8 @@ defmodule Glutton.Pipeline do
     )
   end
 
-  def handle_message(:default, %Message{data: _data} = message, _context) do
-    message
-    |> IO.inspect
+  def handle_message(:default, %Message{data: %{module: module, url: url}} = message, _context) do
+    module.scrape(url)
   end
 
   def transform(url, _opts) do
