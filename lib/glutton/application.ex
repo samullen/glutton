@@ -9,7 +9,8 @@ defmodule Glutton.Application do
   def start(_type, _args) do
     children = [
       {Glutton.URLQueue, []},
-      {Glutton.Pipeline, []}
+      {Glutton.Pipeline, []},
+      {Glutton.URLRegistry, []},
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
