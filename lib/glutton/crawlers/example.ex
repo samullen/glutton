@@ -82,8 +82,7 @@ defmodule Glutton.Crawlers.Example do
   defp _store_link("https://www.iana.org/" <> _rest = url) do
     url_item = %{
       url: url,
-      module: __MODULE__,
-      function: :crawl
+      module: __MODULE__
     }
 
     case URLRegistry.registered?(url_item) do
