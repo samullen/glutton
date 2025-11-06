@@ -79,7 +79,23 @@ defmodule Glutton.Crawlers.Example do
   @doc """
   Helper function to store links that match specific patterns
   """
+  defp _store_link("https://iana.org/" <> _rest = url) do
+    _store_good_link(url)
+  end
+
   defp _store_link("https://www.iana.org/" <> _rest = url) do
+    _store_good_link(url)
+  end
+
+  @doc """
+  Helper function for links that do not match specific patterns
+  """
+  defp _store_link(url) do
+    IO.inspect url, label: "Some other link"
+    :ok
+  end
+
+  defp _store_good_link(url) do
     url_item = %{
       url: url,
       module: __MODULE__
@@ -95,11 +111,4 @@ defmodule Glutton.Crawlers.Example do
     end
   end
 
-  @doc """
-  Helper function for links that do not match specific patterns
-  """
-  defp _store_link(url) do
-    IO.inspect url, label: "Some other link"
-    :ok
-  end
 end
