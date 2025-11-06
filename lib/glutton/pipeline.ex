@@ -22,13 +22,13 @@ defmodule Glutton.Pipeline do
   end
 
   def handle_message(:default, %Message{data: %{module: module, url: url}} = message, _context) do
-    module.scrape(url)
+    module.crawl(url)
     message
   end
 
-  def transform(url, _opts) do
+  def transform(url_item, _opts) do
     %Broadway.Message{
-      data: url,
+      data: url_item,
       acknowledger: Broadway.NoopAcknowledger.init()
     }
   end

@@ -1,9 +1,9 @@
-defmodule Glutton.Scrapers.Example do
+defmodule Glutton.Crawlers.Example do
   alias Glutton.{URLQueue, URLRegistry}
   alias Wallaby.{Browser, Element, Query}
 
   @doc """
-  Initializes the scraper by pushing the starting URL into the URL queue.
+  Initializes the crawler by pushing the starting URL into the URL queue.
   """
   def init() do
     URLQueue.push(%{
@@ -13,10 +13,10 @@ defmodule Glutton.Scrapers.Example do
   end
 
   @doc """
-  Scrapes the given URL, processes links on the page, and stores them in the
+  Crawls the given URL, processes links on the page, and stores them in the
   URL queue.
   """
-  def scrape(url) do
+  def crawl(url) do
     session()
     |> Browser.visit(url)
     |> process_links()
@@ -50,7 +50,7 @@ defmodule Glutton.Scrapers.Example do
   Processes all links matching the css_selectors on the page
   """
   defp process_links(session) do
-    css_selectors = "td a, li a"
+    css_selectors = "header a, footer a"
 
     session
     |> Browser.all(Query.css(css_selectors, minimum: 0))
@@ -82,7 +82,8 @@ defmodule Glutton.Scrapers.Example do
   defp _store_link("https://www.iana.org/" <> _rest = url) do
     url_item = %{
       url: url,
-      module: __MODULE__
+      module: __MODULE__,
+      function: :crawl
     }
 
     case URLRegistry.registered?(url_item) do

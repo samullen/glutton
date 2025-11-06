@@ -19,10 +19,6 @@ defmodule Glutton.URLProducer do
     {:noreply, [], %{state | demand: state.demand + incoming_demand}}
   end
 
-  def handle_demand(_demand, state) do
-    {:noreply, [], state}
-  end
-
   @impl GenStage
   def handle_info(:receive_messages, state) do
     case URLQueue.pop(state.demand) do
@@ -33,7 +29,6 @@ defmodule Glutton.URLProducer do
         schedule_receive_messages(@receive_interval)
         {:noreply, [], state}
     end
-
   end
 
   defp schedule_receive_messages(interval) do

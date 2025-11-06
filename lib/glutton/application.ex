@@ -10,7 +10,7 @@ defmodule Glutton.Application do
     children = [
       {Glutton.URLQueue, []},
       {Glutton.Pipeline, []},
-      {Glutton.URLRegistry, []},
+      {Glutton.URLRegistry, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
